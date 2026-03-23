@@ -21,9 +21,18 @@ class TaskTests(APITestCase):
         url = reverse('task-list')
         response = self.client.post(url,self.task_data, format = 'json')
         self.assertEqual(response.status_code,status.HTTP_201_CREATED)
+        self.assertEqual(Task.objects.count(), 1)
+        self.assertEqual(Task.objects.get().title, 'tarefa teste')
     
     def test_get_task_list(self):
         Task.objects.create(**self.task_data)
         url = reverse('task-list')
         response = self.client.get(url)
         self.assertEqual(response.status_code,status.HTTP_200_OK)
+    
+    def test_update_task(self):
+        task = Task.objects.create(**self.task_data)
+        url = reverse('task-detail', args=[task.id])
+        response = self.client.patch(url,{'title': 'tarefa atualizada'}, format='json')
+        self.assertEqual(response.status_code,status.HTTP_200_OK)
+        self.assertEqual(Task.objects.get().title, 'tarefa atualizada')
