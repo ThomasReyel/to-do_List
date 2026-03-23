@@ -9,7 +9,7 @@ class State(models.TextChoices):
 class Task(models.Model):
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=250, blank=True)
-    deadline = models.DateField
+    deadline = models.DateField()
     completion_date = models.DateField(null=True,blank=True)
     state = models.CharField(choices=State)
 
