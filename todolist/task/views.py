@@ -6,7 +6,7 @@ from django.db import models
 
 class TaskViewSet(ModelViewSet):
     serializer_class = TaskSerializer
-    queryset = Task.objects.all()
+    queryset = Task.objects.all().order_by('-id')
 
     def get_queryset(self):
         queryset = super().get_queryset()
