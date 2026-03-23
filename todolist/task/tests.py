@@ -36,3 +36,9 @@ class TaskTests(APITestCase):
         response = self.client.patch(url,{'title': 'tarefa atualizada'}, format='json')
         self.assertEqual(response.status_code,status.HTTP_200_OK)
         self.assertEqual(Task.objects.get().title, 'tarefa atualizada')
+    
+    def test_delete_task(self):
+        task = Task.objects.create(**self.task_data)
+        url = reverse('task-detail', args=[task.id])
+        response = self.client.delete(url)
+        self.assertEqual(response.status_code,status.HTTP_204_NO_CONTENT)
